@@ -10,7 +10,9 @@ const alphaDown = document.getElementById('alphaDown');
 let alphaTimer;
 
 uploadBtn.addEventListener('click', () => fileInput.click());
-
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+});
 let alpha = 0.5;
 alphaUp.addEventListener('mousedown', (e) => { 
 	if(!stream){
@@ -25,6 +27,33 @@ alphaUp.addEventListener('mousedown', (e) => {
 	
  });
 alphaDown.addEventListener('mousedown', (e) => { 
+	if(!stream){
+		startWebcam(false);
+	}
+	clearTimeout(alphaTimer);
+
+	e.preventDefault();
+	alphaTimer = setInterval(()=>{
+
+	alpha-=0.05; alpha = Math.max(alpha, 0);
+	preview.style.opacity = alpha;
+	console.log(alpha)
+	}, 100);
+});
+
+alphaUp.addEventListener('touchstart', (e) => { 
+	if(!stream){
+		startWebcam(true);
+	}
+	clearTimeout(alphaTimer);
+	e.preventDefault();
+	alphaTimer = setInterval(()=>{
+		alpha+=0.05; alpha = Math.min(alpha, 1);
+		preview.style.opacity = alpha;
+	}, 100)
+	
+ });
+alphaDown.addEventListener('touchstart', (e) => { 
 	if(!stream){
 		startWebcam(false);
 	}
@@ -78,6 +107,12 @@ document.addEventListener('mousemove', (e) => {
 });
 
 document.addEventListener('mouseup', () => {	
+	clearTimeout(alphaTimer);
+
+  isDragging = false;
+});
+
+document.addEventListener('touchend', () => {	
 	clearTimeout(alphaTimer);
 
   isDragging = false;
