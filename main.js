@@ -1,4 +1,5 @@
 // webcam.js
+let stream;
 
 
 const fileInput = document.getElementById('fileInput');
@@ -12,8 +13,8 @@ uploadBtn.addEventListener('click', () => fileInput.click());
 
 let alpha = 0.5;
 alphaUp.addEventListener('mousedown', (e) => { 
-if(!stream){
-		startWebcam();
+	if(!stream){
+		startWebcam(true);
 	}
 	clearTimeout(alphaTimer);
 	e.preventDefault();
@@ -24,6 +25,9 @@ if(!stream){
 	
  });
 alphaDown.addEventListener('mousedown', (e) => { 
+	if(!stream){
+		startWebcam(false);
+	}
 	clearTimeout(alphaTimer);
 
 	e.preventDefault();
@@ -137,23 +141,29 @@ preview.addEventListener('touchend', () => {
   isDragging = false;
 });
 
-let stream;
 
 
 
-async function startWebcam() {
+async function startWebcam(a) {
   try {
     const video = document.getElementById('webcam');
 	video.width = window.innerWidth;
 	video.height = window.innerHeight;
 	
 	try{
-		stream = await navigator.mediaDevices.getUserMedia({
-		  video: {
-			facingMode: { exact: "environment" }
-		  },
-		  audio: false
-		});
+		if(a){
+			stream = await navigator.mediaDevices.getUserMedia({
+			  video: {
+				facingMode: { exact: "environment" }
+			  },
+			  audio: false
+			});
+		}else{
+			stream = await navigator.mediaDevices.getUserMedia({
+			  video: true,
+			  audio: false
+			});
+		}
 	}catch{
 		stream = await navigator.mediaDevices.getUserMedia({
       video: true,
