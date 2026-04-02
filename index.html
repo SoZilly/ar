@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Webcam Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+</head>
+<body>
+	<div id="holder">
+	  <video id="webcam" autoplay playsinline width="640" height="480"></video>  
+	  <input type="file" id="fileInput" accept="image/*">
+	  <div id="buttons">
+		  <button id="uploadBtn">Upload Image</button>
+			<button id="alphaDown">-</button>
+			<button id="alphaUp">+</button>
+		</div>
+	  <img id="preview" width="300" />
+	  
+  </div>
+  
+   <script src="main.js"></script>
+  <style>
+	html, body{
+		width:100%;
+		height:100%;
+		margin:0;
+		padding:0;
+		overflow:hidden;
+	}
+	
+	#preview{
+		position:absolute;
+	}
+	
+	#holder{
+	    display: grid;
+		width: 100%;
+		height: 100%;
+	}
+	
+	#buttons{
+		position:absolute;
+		top:10px;
+		left:10px;
+		display:flex;
+		grid-gap: 10px;
+		z-index:999	
+
+	}
+	
+	#uploadBtn, #alphaUp, #alphaDown{		
+		  display: inline-block;
+		  padding: 15px 30px;
+		  background-color: #4CAF50; /* green */
+		  color: white;
+		  font-size: 14px;
+		  font-weight: bold;
+		  border: none;
+		  border-radius: 8px;
+		  cursor: pointer;
+		  transition: background 0.3s, transform 0.2s;
+	}
+	
+	input{
+		position: absolute;
+		top: 0;
+		left: 0;
+		display:none;
+	}
+	
+	
+  </style>
+</body>
+</html>
